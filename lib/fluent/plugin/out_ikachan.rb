@@ -104,6 +104,8 @@ class Fluent::IkachanOutput < Fluent::Output
   end
 
   def emit(tag, es, chain)
+    log.debug "out_ikachan: started  to emit #{tag}"
+    started = Time.now
     messages = []
     privmsg_messages = []
 
@@ -132,6 +134,9 @@ class Fluent::IkachanOutput < Fluent::Output
       end
     end
 
+    elapsed = (Time.now - started).to_i
+    log.debug "out_ikachan: finished to emit #{tag}"
+    log.info "out_ikachan\telapsed:#{elapsed}\ttag:#{tag}"
     chain.next
   end
 
